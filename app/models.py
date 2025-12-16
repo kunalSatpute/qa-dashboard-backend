@@ -16,7 +16,7 @@ class User(Base):
     username = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     token = Column(String, nullable=True)
-    role = Column(String, default="ADMIN")  # ADMIN only logs in
+    role = Column(String, default="ADMIN") 
 
 class Question(Base):
     __tablename__ = "questions"

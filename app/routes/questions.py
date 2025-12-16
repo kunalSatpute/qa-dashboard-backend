@@ -22,7 +22,6 @@ def get_db():
     finally:
         db.close()
 
-# 1️⃣ Submit Question (Guest)
 @router.post("/submitQuestion", response_model=QuestionResponse)
 async def create_question(q: QuestionCreate, db: Session = Depends(get_db)):
     if not q.message.strip():
@@ -41,7 +40,6 @@ async def create_question(q: QuestionCreate, db: Session = Depends(get_db)):
     return question
 
 
-# 2️⃣ Get All Questions (Forum)
 @router.get("/getAllQuestions", response_model=List[QuestionResponse])
 def get_questions(db: Session = Depends(get_db)):
     return (
@@ -57,7 +55,6 @@ def get_questions(db: Session = Depends(get_db)):
     )
 
 
-# 3️⃣ Answer a Question (Admin / User)
 @router.post("/{id}/answer", response_model=AnswerResponse)
 async def answer_question(
     id: int,
@@ -85,7 +82,6 @@ async def answer_question(
     return answer
 
 
-# 4️⃣ Explicitly Mark as Answered (Admin only – optional)
 @router.put("/{id}/mark-answered", dependencies=[Depends(get_current_admin)])
 async def mark_answered(id: int, db: Session = Depends(get_db)):
     question = db.query(Question).filter(Question.id == id).first()
